@@ -1,0 +1,52 @@
+version:                              '3'
+
+services:
+  php:
+    build:
+      context:                        ./php
+      dockerfile:                     Dockerfile
+    image:                            inpeco-api/php:latest
+    container_name:                   inpeco-api-php
+    expose:
+      - "9000"
+    depends_on:
+      - db
+    networks:
+      intra_net:
+    volumes:
+      - './app:/var/www/html'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+        
+  db:
+    image: mysql:8
+    command: '--default-authentication-plugin=mysql_native_password'
+    container_name:                   inpeco-mysql8
+    networks:
+      intra_net:
+    volumes:
+     - db_data:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+     MYSQL_ROOT_PASSWORD: somewordpress
+     MYSQL_DATABASE: inpeco
+     MYSQL_USER: inpeco
+     MYSQL_PASSWORD: inpeco
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+        
+volumes:
+  db_data:    
+          
+networks:
+#  front_net:
+#    external: 
+#      name: haproxy_front_net
+  intra_net:
+    driver: bridge
