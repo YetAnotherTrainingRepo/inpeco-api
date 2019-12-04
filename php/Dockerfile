@@ -9,7 +9,8 @@ RUN apt update && \
            libboost-dev \
            openssl \
            protobuf-compiler \
-           php7.2-cli php7.2-dev php7.2-mysql php7.2-pdo php7.2-xml composer
+           php7.2-cli php7.2-dev php7.2-mysql php7.2-pdo php7.2-xml composer php-mbstring \
+           unzip
 
 RUN pecl install mysql_xdevapi && \
     echo "extension=mysql_xdevapi.so" > /etc/php/7.2/mods-available/mysql_xdevapi.ini && \
