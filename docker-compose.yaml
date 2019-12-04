@@ -9,6 +9,9 @@ services:
     container_name:                   inpeco-api-php
     expose:
       - "9000"
+      - "8080"
+    ports:
+      - 8080:8080
     depends_on:
       - db
     networks:
